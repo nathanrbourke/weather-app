@@ -1,0 +1,12 @@
+<div class="flex">
+  <%= form_with(url: forecasts_path, local: true) do |form| %>
+    <div class="flex">
+      <div class="flex-1 mr-2">
+        <%= form.text_field :postal_code, placeholder: "Enter postal code", class: "border border-gray-300" %>
+      </div>
+      <div>
+        <%= form.submit "Get Weather Report" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -12,8 +12,12 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
+    <header class="flex bg-white py-2">
+      <h1 class="text-blue-300">Weather App</h1>
+      <%= render partial: 'forecasts/partials/forecast_form' %>
+    </header>
+    <main class="min-h-screen bg-blue-300">
+        <%= yield %>
     </main>
   </body>
 </html>
