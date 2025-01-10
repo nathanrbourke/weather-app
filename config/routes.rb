@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "forecasts#index"
 
-  resources :forecasts, only: [:index, :create]
+  resources :forecasts, only: [:index]
 end

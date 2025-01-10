@@ -19,7 +19,7 @@ module.exports = {
         'h4': '1.25rem', // 20px
         'h5': '1.125rem', // 18px
         'h6': '1rem', // 16px
-        'p': '1rem', // 16px
+        'p': '0.75rem', // 16px
         'small': '0.875rem', // 14px
       },
     },

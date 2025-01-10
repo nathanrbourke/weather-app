@@ -1,23 +1,26 @@
-<section class="inline-block flex p-5 space-x-8">
-  <div>
-    <h1>Now</h1>
-    <%= render partial: 'forecasts/partials/forecast_day' %>
+
+
+ <section class="text-white p-5">
+  <div class="py-2">
+    <h4 class="text-h4">Hartford, CT<h4>
+    <p class="text-p">06074</p>
   </div>
-  <div>
-    <h1>Upcoming</h1>
-    <div class="flex space-x-4">
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
-      <%= render partial: 'forecasts/partials/forecast_day' %>
+
+  <div class="inline-block flex space-x-8">
+    <div>
+      <h6 class="text-h6 font-bold text-white">Now</h6>
+      <%= render partial: 'forecasts/partials/weather_card', locals: { weather: @current_weather } %>
+    </div>
+    <div>
+      <h6 class="text-h6 font-bold text-white">Upcoming</h6>
+      <div class="flex space-x-4">
+        <% @daily_forecast.each do |forecast_day| %>
+          <%= render partial: 'forecasts/partials/weather_card', locals: { weather: forecast_day } %>
+        <% end %>
+      </div>
     </div>
   </div>
+  <div class="py-2">
+    <p class="text-p">Updated: <%= @last_cached_minutes_ago %> min ago
+
 </section>

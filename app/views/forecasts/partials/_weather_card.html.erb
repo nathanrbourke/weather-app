@@ -1,0 +1,32 @@
+<article class="bg-white shadow-2xl min-w-[160px]">
+  <div class="flex border-b items-center border-gray-200 p-1">
+    <h5 class="text-h5 pr-2 text-gray-600"><%= weather.day_of_week %></h1><p class="text-p text-gray-500"><%= weather.month_and_day %></p>
+  </div>
+  <div class="pt-2">
+    <h1 class="text-h1 text-center leading-none text-gray-600"><%= weather.tempurature.to_i %>° F<h1>
+    <% if weather.secondary_tempurature %>
+    <p class="text-p text-center text-gray-600">Low: <%= weather.secondary_tempurature&.to_i %>° F</p>
+    <% end %>
+  </div>
+
+  <div class="py-4">
+
+    <h6 class="text-h6 text-center text-gray-600">Partly Cloudy</h2>
+  </div>
+
+  <div>
+    <div class="odd:bg-gray-100 px-2 py-1 w-full flex justify-between">
+      <p class="text-p text-gray-500">Humidity</p>
+      <p class="text-p text-gray-600"><%= weather.humidity_percentage %>%</p>
+    </div>
+    <div class="odd:bg-gray-100 px-2 py-1 w-full flex justify-between">
+      <p class="text-p text-gray-500">Wind</p>
+      <p class="text-p text-gray-600"><%= weather.wind_direction %> <%= weather.wind_speed %>mph</p>
+    </div>
+    <div class="odd:bg-gray-100 px-2 py-1 w-full flex justify-between">
+      <p class="text-p text-gray-500">Dew Point</p>
+      <p class="text-p text-gray-600"><%= weather.dew_point.round %></p>
+    </div>
+  </div>
+
+</article>
