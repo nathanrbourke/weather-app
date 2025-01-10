@@ -1,9 +1,11 @@
 class ForecastsController < ApplicationController
   def index
     if params[:postal_code]
-      weather_report = WeatherReportService.new({ postal_code: params[:postal_code] })
-      @daily_forecast = weather_report.daily_forecast.map { |forecast| ForecastWeatherDay.new(forecast) }
-      @current_weather = CurrentWeatherDay.new(weather_report.current_weather)
+      daily_forecast_service = ::Service::DailyForecast.new({ postal_code: params[:postal_code] })
+      current_weather_service = ::Service::CurrentWeather.new({ postal_code: params[:postal_code] })
+
+      @daily_forecast = daily_forecast_service.daily_forecast
+      @current_weather = current_weather_service.current_weather
     end
   end
 end
