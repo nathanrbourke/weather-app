@@ -10,8 +10,7 @@
   </div>
 
   <div class="py-4">
-
-    <h6 class="text-h6 text-center text-gray-600">Partly Cloudy</h2>
+    <h6 class="text-h6 text-center text-gray-600"><%= weather.forecast_description %></h2>
   </div>
 
   <div>
@@ -21,7 +20,7 @@
     </div>
     <div class="odd:bg-gray-100 px-2 py-1 w-full flex justify-between">
       <p class="text-p text-gray-500">Wind</p>
-      <p class="text-p text-gray-600"><%= weather.wind_direction %> <%= weather.wind_speed %>mph</p>
+      <p class="text-p text-gray-600"><%= weather.wind_direction %> <%= weather.wind_speed.round %>mph</p>
     </div>
     <div class="odd:bg-gray-100 px-2 py-1 w-full flex justify-between">
       <p class="text-p text-gray-500">Dew Point</p>
