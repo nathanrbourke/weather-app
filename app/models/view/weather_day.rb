@@ -12,6 +12,10 @@ module View
       @description = data.fetch('weather').fetch('description')
     end
 
+    def template_path
+      'forecasts/partials/weather_card'
+    end
+
     def day_of_week
       Constants::DAYS[date.cwday - 1]
     end

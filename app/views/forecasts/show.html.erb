@@ -7,13 +7,13 @@
   <div class="inline-block flex space-x-8">
     <div>
       <h6 class="text-h6 font-bold text-white">Now</h6>
-      <%= render partial: 'forecasts/partials/weather_card', locals: { weather: @current_weather } %>
+      <%= render partial: @current_weather.template_path, locals: { weather: @current_weather } %>
     </div>
     <div>
       <h6 class="text-h6 font-bold text-white">Upcoming</h6>
       <div class="flex space-x-4">
         <% @daily_forecast.each do |forecast_day| %>
-          <%= render partial: 'forecasts/partials/weather_card', locals: { weather: forecast_day } %>
+          <%= render partial: forecast_day.template_path, locals: { weather: forecast_day } %>
         <% end %>
       </div>
     </div>
