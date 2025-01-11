@@ -2,10 +2,9 @@ module Service
   class CurrentWeather
     CACHE_BASE_SETTINGS = {
       domain_key_fragment: 'weather_report',
-      collection_key_fragment:  'current_weather',
+      collection_key_fragment: 'current_weather',
       expiry: 30 * 60 # minutes * seconds
-    }
-
+    }.freeze
 
     def initialize(locale_information)
       cache_settings = CACHE_BASE_SETTINGS.merge(record_key_fragment: locale_information.fetch(:postal_code))

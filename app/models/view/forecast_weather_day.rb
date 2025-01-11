@@ -2,8 +2,8 @@ module View
   class ForecastWeatherDay < WeatherDay
     def initialize(data)
       super(data)
-      @high_temp = data.fetch("high_temp")
-      @low_temp = data.fetch("low_temp")
+      @high_temp = data.fetch('high_temp')
+      @low_temp = data.fetch('low_temp')
     end
 
     def tempurature
