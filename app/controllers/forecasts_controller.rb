@@ -13,9 +13,7 @@ class ForecastsController < ApplicationController
     @daily_forecast = daily_forecast_service.daily_forecast
     @current_weather = current_weather_service.current_weather
 
-    @city_name = @current_weather.city_name
-    @state_code = @current_weather.state_code
-    @postal_code = params[:postal_code]
+    @locale = current_weather_service.locale
 
     @current_weather_data_source = current_weather_service.data_source
     @daily_forecast_data_source = daily_forecast_service.data_source

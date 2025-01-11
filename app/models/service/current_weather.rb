@@ -7,7 +7,8 @@ module Service
     }.freeze
 
     def initialize(locale_information)
-      cache_settings = CACHE_BASE_SETTINGS.merge(record_key_fragment: locale_information.fetch(:postal_code))
+      @postal_code = locale_information.fetch(:postal_code)
+      cache_settings = CACHE_BASE_SETTINGS.merge(record_key_fragment: @postal_code)
       @api_endpoint_cache = ::Service::ApiEndpointCache.new(
         endpoint: ::Api::Weatherbit.instance.endpoint('GET', '/current', locale_information.merge(country: 'US')),
         cache: Cache.new(**cache_settings)
@@ -15,22 +16,29 @@ module Service
     end
 
     def current_weather
-      @data ||= api_endpoint_cache.fetch
+      ::View::CurrentWeatherDay.new(data.fetch('data').first)
+    end
 
-      ::View::CurrentWeatherDay.new(@data['data'].first)
+    def locale
+      weather_record = data.fetch('data').first
+      ::View::Locale.new(
+        city_name: weather_record.fetch('city_name'),
+        state_code: weather_record.fetch('state_code'),
+        postal_code: postal_code
+      )
     end
 
     def data_source
-      fetch_weather_data if api_endpoint_cache.source.nil?
+      data # access data method to fetch it before checking source.
       api_endpoint_cache.source
     end
 
     private
 
-    attr_reader :api_endpoint_cache
+    attr_reader :api_endpoint_cache, :postal_code
 
-    def fetch_weather_data
-      @weather_data ||= api_endpoint_cache.fetch
+    def data
+      @data ||= api_endpoint_cache.fetch
     end
   end
 end

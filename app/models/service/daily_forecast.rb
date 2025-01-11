@@ -18,12 +18,13 @@ module Service
     end
 
     def daily_forecast
-      fetch_weather_data
-      @weather_data['data'][0..(NUM_OF_FORECAST_DAYS - 1)].map { |forecast| ::View::ForecastWeatherDay.new(forecast) }
+      data
+        .fetch('data')[0..(NUM_OF_FORECAST_DAYS - 1)]
+        .map { |forecast| ::View::ForecastWeatherDay.new(forecast) }
     end
 
     def data_source
-      fetch_weather_data if api_endpoint_cache.source.nil?
+      data # access data method to fetch it before checking source.
       api_endpoint_cache.source
     end
 
@@ -31,8 +32,8 @@ module Service
 
     attr_reader :weather_data, :api_endpoint_cache
 
-    def fetch_weather_data
-      @weather_data ||= api_endpoint_cache.fetch
+    def data
+      @data ||= api_endpoint_cache.fetch
     end
   end
 end
