@@ -1,6 +1,6 @@
 module View
   class WeatherDay
-    attr_reader :humidity_percentage, :wind_speed, :dew_point
+    attr_reader :tempurature, :secondary_tempurature, :humidity_percentage, :wind_speed, :dew_point
 
     class AttributeNotFoundError < StandardError; end
 
