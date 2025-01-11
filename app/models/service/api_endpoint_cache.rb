@@ -1,32 +1,41 @@
 module Service
   class ApiEndpointCache
-    attr_reader :source
+    attr_reader :data_source, :service_up, :data
+
     def initialize(endpoint:, cache:)
       @endpoint = endpoint
       @cache = cache
+      # Assume services are up until they are interacted with
+      # When cache is unavailable, the API is NOT used as a backup
+      # to avoid the risk of flooding it with requests.
+      @service_up = true
     end
 
     def fetch
       cached_data = cache.get
 
       if cached_data
-        self.source = 'cache'
+        self.data_source = 'cache'
 
-        cached_data
+        @data ||= cached_data
       else
         api_response = endpoint.call
         # TODO: This is an issue if future API responses use the "updated_at" attribute
         api_response.merge!(updated_at: Time.now.utc.iso8601)
         cache.set(api_response)
-        self.source = 'api'
+        self.data_source = 'api'
 
-        api_response
+        @data ||= api_response
       end
+    rescue Redis::CannotConnectError, Redis::TimeoutError, Api::Weatherbit::ApiError => e
+      Rails.logger.debug("#{e.class.name}, Message: #{e.message}")
+      @service_up = false
+      nil
     end
 
     private
 
-    attr_reader :endpoint, :cache, :record_key
-    attr_writer :source
+    attr_reader :endpoint, :cache
+    attr_writer :data_source
   end
 end

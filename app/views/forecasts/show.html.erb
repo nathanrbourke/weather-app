@@ -1,21 +1,41 @@
 <section class="text-white p-5">
-<%= render partial: @locale.template_path, locals: { locale: @locale } %>
+  <% if @current_weather_service.service_up %>
+    <%= render partial: @current_weather_service.locale.template_path, locals: { locale: @current_weather_service.locale } %>
+  <% else %>
+    <p class="text-p">Service down, check back later.</p>
+  <%  end %>
   <div class="inline-block flex space-x-8">
     <div>
       <div class="flex space-x-4">
         <h4 class="text-h4 font-bold text-white">Now</h4>
-        <%= render partial: 'forecasts/partials/cache_pip_indicator', locals: { source_of_data: @current_weather_data_source } %>
+        <% if @current_weather_service.service_up %>
+          <%= render partial: 'forecasts/partials/cache_pip_indicator', locals: { source_of_data: @current_weather_service.data_source } %>
+        <% end %>
       </div>
-      <%= render partial: @current_weather.template_path, locals: { weather: @current_weather } %>
+      <% if @current_weather_service.service_up %>
+        <%= render partial: @current_weather_service.current_weather.template_path, locals: { weather: @current_weather_service.current_weather } %>
+      <% else %>
+          <article class="flex items-center justify-center bg-white shadow-2xl min-w-[160px] min-h-[232px]">
+            <p class="text-gray-600 text-p">Service down</p>
+          </article>
+      <% end %>
     </div>
     <div>
       <div class="flex space-x-4">
         <h4 class="text-h4 font-bold text-white">Upcoming</h4>
-        <%= render partial: 'forecasts/partials/cache_pip_indicator', locals: { source_of_data: @daily_forecast_data_source } %>
+        <% if @daily_forecast_service.service_up %>
+          <%= render partial: 'forecasts/partials/cache_pip_indicator', locals: { source_of_data: @daily_forecast_service.data_source } %>
+        <% end %>
       </div>
       <div class="flex space-x-4">
-        <% @daily_forecast.each do |forecast_day| %>
-          <%= render partial: forecast_day.template_path, locals: { weather: forecast_day } %>
+        <% if @daily_forecast_service.service_up %>
+          <% @daily_forecast_service.daily_forecast.each do |forecast_day| %>
+            <%= render partial: forecast_day.template_path, locals: { weather: forecast_day } %>
+          <% end %>
+        <% else %>
+          <article class="flex items-center justify-center bg-white shadow-2xl min-w-[160px] min-h-[232px]">
+            <p class="text-gray-600 text-p">Service down</p>
+          </article>
         <% end %>
       </div>
     </div>

@@ -16,7 +16,7 @@ module Api
       query_with_key = query.merge(key)
       with_retries(3) do
         response = self.class.get(route, query: query_with_key)
-        json = JSON.parse(response)
+        json = JSON.parse(response.body)
 
         raise ApiError, json['error'] if json['error']
 
