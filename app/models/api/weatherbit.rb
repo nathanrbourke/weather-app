@@ -1,40 +1,44 @@
 require 'singleton'
 module Api
   class Weatherbit
-    class InvalidParametersError < StandardError; end
+    class ApiError < StandardError; end
     include Singleton
     include HTTParty
 
     base_uri 'https://api.weatherbit.io/v2.0'
+    default_timeout 5
 
     def endpoint(method, route, params)
       Endpoint.new(self, method, route, params)
     end
 
-    def base_query
-      { key: ENV['WEATHERBIT_API_KEY'] }
-    end
+    def get(route, query:)
+      query_with_key = query.merge(key)
+      with_retries(3) do
+        response = self.class.get(route, query: query_with_key)
+        json = JSON.parse(response)
 
-    class Endpoint
-      def initialize(api, method, route, params)
-        @api = api
-        @method = method
-        @route = route
-        @params = params
-      end
-
-      def call
-        all_params = @params.merge(@api.base_query)
-        # TODO: Do not rely on send in the long term - create a better interface
-        response = @api.class.send(@method.downcase, @route, query: all_params)
-
-        if response['error'] == 'Invalid Parameters supplied.'
-          raise ::Api::Weatherbit::InvalidParametersError,
-                "Invalid params supplied to weatherbit API call. params: #{all_params}"
-        end
+        raise ApiError, json['error'] if json['error']
 
         response
       end
+    end
+
+    def with_retries(max_retries)
+      attempts = 0
+
+      begin
+        attempts += 1
+        yield
+      rescue Net::OpenTimeout, Net::ReadTimeout => e
+        Rails.logger.debug("#{e.class.name}, Message: #{e.message}")
+        retry if attempts < max_retries
+        raise ApiError, "Max retries #{max_retries} reached."
+      end
+    end
+
+    def key
+      { key: ENV['WEATHERBIT_API_KEY'] }
     end
   end
 end
