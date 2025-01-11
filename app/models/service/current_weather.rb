@@ -14,16 +14,23 @@ module Service
       )
     end
 
-    delegate :source, to: :api_endpoint_cache
-
     def current_weather
       @data ||= api_endpoint_cache.fetch
 
       ::View::CurrentWeatherDay.new(@data['data'].first)
     end
 
+    def data_source
+      fetch_weather_data if api_endpoint_cache.source.nil?
+      api_endpoint_cache.source
+    end
+
     private
 
     attr_reader :api_endpoint_cache
+
+    def fetch_weather_data
+      @weather_data ||= api_endpoint_cache.fetch
+    end
   end
 end

@@ -1,0 +1,9 @@
+<div class="flex items-center space-x-2">
+  <% if source_of_data == 'cache' %>
+    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+    <p class="text-white text-p">From cache</p>
+  <% elsif source_of_data == 'api' %>
+    <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+    <p class="text-white text-p">From API</p>
+  <% end %>
+</div>
