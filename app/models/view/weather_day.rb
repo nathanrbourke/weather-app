@@ -1,10 +1,11 @@
 module View
   class WeatherDay
-    attr_reader :date, :secondary_tempurature, :humidity_percentage, :wind_dir, :wind_speed, :dew_point, :description
+    attr_reader :humidity_percentage, :wind_speed, :dew_point
+
+    class AttributeNotFoundError < StandardError; end
 
     def initialize(data)
-      @date = Date.parse(data['ob_time'] || data['valid_date'])
-      @snow = data.fetch('snow')
+      @date = Date.parse(data.fetch('date'))
       @dew_point = data.fetch('dewpt')
       @wind_speed = data.fetch('wind_spd')
       @wind_dir = data.fetch('wind_dir')
@@ -17,19 +18,21 @@ module View
     end
 
     def day_of_week
-      Constants::DAYS[date.cwday - 1]
+      Constants::DAYS.fetch(date.cwday - 1) { raise AttributeNotFoundError, 'day_of_week' }
     end
 
     def month_and_day
-      "#{Constants::MONTHS[date.month - 1][0..2]} #{date.day}"
+      month_name = Constants::MONTHS.fetch(date.month - 1) { |_| raise AttributeNotFoundError, 'month_nane' }
+
+      "#{month_name[0..2]} #{date.day}"
     end
 
     def wind_direction
-      found = Constants::COMPASS_DIRECTIONS.find { |range, _| range.include?(wind_dir.round) }
+      direction = Constants::COMPASS_DIRECTIONS.find { |range, _| range.include?(wind_dir.round) }
 
-      raise 'Wind direction not found.' unless found
+      raise AttributeNotFoundError, 'wind_direction' if direction.nil?
 
-      found.last
+      direction.last # access value in [key, value]
     end
 
     # The descriptions from the API are unsatisfying, so this is an attempt to correct some,
@@ -42,5 +45,9 @@ module View
       else description
       end
     end
+
+    private
+
+    attr_reader :wind_dir, :date, :description
   end
 end

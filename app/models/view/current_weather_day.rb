@@ -1,7 +1,7 @@
 module View
   class CurrentWeatherDay < WeatherDay
     def initialize(data)
-      super(data)
+      super(data.merge('date' => data.fetch('ob_time')))
       @current_tempurature = data.fetch('temp')
     end
 

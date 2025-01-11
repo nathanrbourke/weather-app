@@ -1,7 +1,7 @@
 module View
   class ForecastWeatherDay < WeatherDay
     def initialize(data)
-      super(data)
+      super(data.merge('date' => data.fetch('valid_date')))
       @high_temp = data.fetch('high_temp')
       @low_temp = data.fetch('low_temp')
     end
