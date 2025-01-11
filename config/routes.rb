@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'forecasts#new'
 
-  resources :forecasts, only: %i[new create show]
+  get 'forecasts/:postal_code', to: 'forecasts#show', as: 'forecast'
+  resources :forecasts, only: %i[new create]
 end
