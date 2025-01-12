@@ -1,36 +1,36 @@
 module Constants
   COMPASS_DIRECTIONS = {
-    1..11 => "N",
-    12..34 => "NNE",
-    35..56 => "NE",
-    57..78 => "ENE",
-    79..101 => "E",
-    102..123 => "ESE",
-    124..146 => "SE",
-    147..168 => "SSE",
-    169..191 => "S",
-    192..213 => "SSW",
-    214..236 => "SW",
-    237..258 => "WSW",
-    259..281 => "W",
-    282..303 => "WNW",
-    304..326 => "NW",
-    327..348 => "NNW",
-    349..360 => "N"
+    0..10 => 'N',
+    11..33 => 'NNE',
+    34..55 => 'NE',
+    56..77 => 'ENE',
+    78..100 => 'E',
+    101..122 => 'ESE',
+    123..145 => 'SE',
+    146..167 => 'SSE',
+    168..190 => 'S',
+    191..212 => 'SSW',
+    213..235 => 'SW',
+    236..257 => 'WSW',
+    258..280 => 'W',
+    281..302 => 'WNW',
+    303..325 => 'NW',
+    326..347 => 'NNW',
+    348..359 => 'N'
   }
 
-  DAYS = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
+  DAYS = %w[
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+    Saturday
+    Sunday
   ]
 
-  MONTHS = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+  MONTHS = %w[
+    January February March April May June
+    July August September October November December
   ]
 end

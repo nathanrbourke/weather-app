@@ -69,11 +69,11 @@ RSpec.describe View::WeatherDay do
     end
 
     it 'returns correct wind directions for other values' do
-      expect(described_class.new(base_data.merge('wind_dir' => 1)).wind_direction).to eq('N')
+      expect(described_class.new(base_data.merge('wind_dir' => 0)).wind_direction).to eq('N')
       expect(described_class.new(base_data.merge('wind_dir' => 90)).wind_direction).to eq('E')
       expect(described_class.new(base_data.merge('wind_dir' => 180)).wind_direction).to eq('S')
       expect(described_class.new(base_data.merge('wind_dir' => 315)).wind_direction).to eq('NW')
-      expect(described_class.new(base_data.merge('wind_dir' => 360)).wind_direction).to eq('N')
+      expect(described_class.new(base_data.merge('wind_dir' => 359)).wind_direction).to eq('N')
     end
 
     it 'raises AttributeNotFoundError for out-of-range days' do
