@@ -1,5 +1,7 @@
 module Service
   class ApiEndpointCache
+    include ApplicationHelper
+
     attr_reader :data_source, :service_up, :data
 
     def initialize(endpoint:, cache:)
@@ -28,7 +30,7 @@ module Service
         @data ||= api_response
       end
     rescue Redis::CannotConnectError, Redis::TimeoutError, Api::Weatherbit::ApiError => e
-      Rails.logger.debug("#{e.class.name}, Message: #{e.message}")
+      log_debug(e)
       @service_up = false
       nil
     end
