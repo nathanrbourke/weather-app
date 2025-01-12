@@ -11,6 +11,8 @@ module Service
       # When cache is unavailable, the API is NOT used as a backup
       # to avoid the risk of flooding it with requests.
       @service_up = true
+      # When a data source is used, it is recorded here.
+      @data_source = nil
     end
 
     def fetch

@@ -20,7 +20,6 @@ module Api
         raise ApiError, '204 No content in body' if response.body.nil?
 
         json = JSON.parse(response.body)
-
         raise ApiError, json['error'] if json['error']
 
         response

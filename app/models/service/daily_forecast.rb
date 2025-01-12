@@ -20,6 +20,7 @@ module Service
       @api_endpoint_cache.fetch
     end
 
+    # Truncate the number forecast days to reasonable display length.
     def daily_forecast
       @api_endpoint_cache.data
                          .fetch('data')[0..(NUM_OF_FORECAST_DAYS - 1)]
