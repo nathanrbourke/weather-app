@@ -11,8 +11,9 @@ This application follows the best practices of enterprise architecture and rails
 
 ## Installation
 
-1. Install and run Redis through homebrew.
-2. run `bundle install` and `./bin/dev`. This starts both rails and tailwind compilation.
+1. Sign up for free Weatherbit tier (https://www.weatherbit.io/), generate a personal access token and and set it to `WEATHERBIT_API_KEY` in a `/.env` file
+2. Install and run Redis through homebrew.
+3. run `bundle install` and `./bin/dev`. This starts both rails and tailwind compilation.
 
 You may need to install tailwind with: `./bin/rails tailwindcss:install`
 You may need to install foreman separately, but `./bin/dev` should take care of it.
